@@ -113,39 +113,30 @@
     ]
   $table.bootstrapTable({ data: data })
 
+  function getSelectedValues(selectname) {
+    let selectedValues = []
+    const parentElement = document.getElementById(selectname).parentElement;
+    const checkboxes = parentElement.children.item(1).getElementsByClassName('form-check-input');    
+    for (let cbox of checkboxes) {
+      if (cbox.checked && cbox.value) {
+        selectedValues.push(cbox.value)
+      }
+    }
+    return selectedValues
+  }
+
   function updateFilter() {
-    // Loop checkboxes
-
-    // Manufacturer
-    const parentElementColB = document.getElementById("multiselect-one").parentElement;
-    const cboxesFilterColB = parentElementColB.children.item(1).getElementsByClassName('form-check-input');
-    let selectedColBvalues = []
-    for (let cbox of cboxesFilterColB) {
-      if (cbox.checked && cbox.value) {
-        selectedColBvalues.push(cbox.value)
-      }
-    }
+    let selectedManufacturers = getSelectedValues("multiselect-one")
+    let selectedColors = getSelectedValues("multiselect-two")
     
-    // Color
-    const parentElementColC = document.getElementById("multiselect-two").parentElement;
-    const cboxesFilterColC = parentElementColC.children.item(1).getElementsByClassName('form-check-input');
-    let selectedColCvalues = []
-    for (let cbox of cboxesFilterColC) {
-      if (cbox.checked && cbox.value) {
-        selectedColCvalues.push(cbox.value)
-      }
-    }
-    // console.log(selectedColBvalues)
-    // console.log(selectedColCvalues)
-
     var selection = {}
-    if (selectedColBvalues.length) {
-      selection.Manufacturer = selectedColBvalues
+    if (selectedManufacturers.length) {
+      selection.Manufacturer = selectedManufacturers
     }
-    if (selectedColCvalues.length) {
-      selection.Color = selectedColCvalues
+    if (selectedColors.length) {
+      selection.Color = selectedColors
     }
-    console.log(selection)
+    //console.log(selection)
 
     var $table = $('#table')
     $table.bootstrapTable('filterBy', selection)
