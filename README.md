@@ -1,0 +1,1 @@
+# filter-bootstrap-table-with-multiselects-demo
